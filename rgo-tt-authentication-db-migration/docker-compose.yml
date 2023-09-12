@@ -1,0 +1,51 @@
+version: '3'
+
+services:
+  postgresql:
+    build: ./
+    container_name: native-db
+    ports:
+      - 5433:5432
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+
+  flyway-manual-client:
+    image: flyway/flyway:latest
+    container_name: flyway_manual_client
+    command: -connectRetries=60
+      -configFiles=/flyway/conf/manual.conf
+      migrate
+
+    volumes:
+      - ./src/main/resources/db/manual:/flyway/sql
+      - ./src/main/resources/flyway/config/manual:/flyway/conf
+    depends_on:
+      postgresql:
+        condition: service_healthy
+
+
+  flyway-migration-client:
+    image: flyway/flyway:latest
+    container_name: flyway_migration_client
+    command: -connectRetries=60
+      -configFiles=/flyway/conf/migration.conf
+      migrate
+
+    volumes:
+      - ./src/main/resources/db/migration:/flyway/sql
+      - ./src/main/resources/flyway/config/migration:/flyway/conf
+    depends_on:
+      flyway-manual-client:
+        condition: service_completed_successfully
+
+
+  stub-container:
+    image: ogajun/stub-container:latest
+    container_name: stub_container
+    depends_on:
+      flyway-migration-client:
+        condition: service_completed_successfully
