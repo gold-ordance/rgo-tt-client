@@ -17,11 +17,26 @@
 
     <packaging>pom</packaging>
 
+    <modules>
+        <module>rgo-tt-authentication-boot</module>
+    </modules>
+
     <properties>
-        <java.version>15</java.version>
+        <java.version>17</java.version>
+
+        <armeria.version>1.25.2</armeria.version>
     </properties>
 
     <dependencyManagement>
+        <dependencies>
+            <!-- armeria -->
+            <dependency>
+                <groupId>com.linecorp.armeria</groupId>
+                <artifactId>armeria-spring-boot3-starter</artifactId>
+                <version>${armeria.version}</version>
+            </dependency>
+            <!-- armeria -->
+        </dependencies>
     </dependencyManagement>
 
     <build>
