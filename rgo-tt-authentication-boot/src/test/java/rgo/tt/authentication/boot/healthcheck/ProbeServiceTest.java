@@ -14,25 +14,25 @@ class ProbeServiceTest {
     private final ProbeService service = new ProbeService();
 
     @Test
-    void getLivenessProbe_ok() {
+    void livenessProbe_ok() {
         HttpResponse expected = ok();
-        HttpResponse actual = service.getLivenessProbe();
+        HttpResponse actual = service.livenessProbe();
         assertThat(status(expected)).isEqualTo(status(actual));
     }
 
     @Test
-    void getReadinessProbe_fail_contextIsNotReady() {
+    void readinessProbe_fail_contextIsNotReady() {
         HttpResponse expected = fail();
-        HttpResponse actual = service.getReadinessProbe();
+        HttpResponse actual = service.readinessProbe();
         assertThat(status(expected)).isEqualTo(status(actual));
     }
 
     @Test
-    void getReadinessProbe_ok() {
+    void readinessProbe_ok() {
         service.start(any());
 
         HttpResponse expected = ok();
-        HttpResponse actual = service.getReadinessProbe();
+        HttpResponse actual = service.readinessProbe();
         assertThat(status(expected)).isEqualTo(status(actual));
     }
 

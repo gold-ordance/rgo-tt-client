@@ -25,12 +25,12 @@ public class ProbeService {
     }
 
     @Get("/liveness")
-    public HttpResponse getLivenessProbe() {
+    public HttpResponse livenessProbe() {
         return ok();
     }
 
     @Get("/readiness")
-    public HttpResponse getReadinessProbe() {
+    public HttpResponse readinessProbe() {
         return ready ? ok() : fail();
     }
 
