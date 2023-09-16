@@ -12,15 +12,15 @@
     </parent>
 
     <groupId>ru.gold.ordance</groupId>
-    <artifactId>rgo-tt-client</artifactId>
+    <artifactId>rgo-tt-user</artifactId>
     <version>23.0.0-SNAPSHOT</version>
 
     <packaging>pom</packaging>
 
     <modules>
-        <module>rgo-tt-client-boot</module>
-        <module>rgo-tt-client-db-migration</module>
-        <module>rgo-tt-client-persistence</module>
+        <module>rgo-tt-user-boot</module>
+        <module>rgo-tt-user-db-migration</module>
+        <module>rgo-tt-user-persistence</module>
     </modules>
 
     <properties>
@@ -36,7 +36,7 @@
             <!-- self-modules -->
             <dependency>
                 <groupId>ru.gold.ordance</groupId>
-                <artifactId>rgo-tt-client-persistence</artifactId>
+                <artifactId>rgo-tt-user-persistence</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <!-- self-modules -->
