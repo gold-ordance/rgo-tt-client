@@ -1,4 +1,4 @@
-package rgo.tt.authentication.boot.healthcheck;
+package rgo.tt.client.boot.healthcheck;
 
 import com.linecorp.armeria.common.HttpResponse;
 import com.linecorp.armeria.common.HttpStatus;

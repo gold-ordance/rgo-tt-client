@@ -1,4 +1,4 @@
-package rgo.tt.authentication;
+package rgo.tt.client;
 
 import com.linecorp.armeria.client.WebClient;
 import com.linecorp.armeria.common.AggregatedHttpResponse;

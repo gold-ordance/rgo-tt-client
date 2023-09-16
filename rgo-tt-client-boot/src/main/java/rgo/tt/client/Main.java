@@ -1,4 +1,4 @@
-package rgo.tt.authentication;
+package rgo.tt.client;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

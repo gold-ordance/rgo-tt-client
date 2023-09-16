@@ -1,4 +1,4 @@
-package rgo.tt.authentication.boot.healthcheck;
+package rgo.tt.client.boot.healthcheck;
 
 import com.linecorp.armeria.common.HttpResponse;
 import com.linecorp.armeria.common.HttpStatus;
@@ -6,8 +6,8 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
-import static rgo.tt.authentication.boot.healthcheck.ProbeService.fail;
-import static rgo.tt.authentication.boot.healthcheck.ProbeService.ok;
+import static rgo.tt.client.boot.healthcheck.ProbeService.fail;
+import static rgo.tt.client.boot.healthcheck.ProbeService.ok;
 
 class ProbeServiceTest {
 
