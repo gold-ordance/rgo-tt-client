@@ -21,6 +21,7 @@
         <module>rgo-tt-user-boot</module>
         <module>rgo-tt-user-db-migration</module>
         <module>rgo-tt-user-persistence</module>
+        <module>rgo-tt-user-service</module>
     </modules>
 
     <properties>
@@ -36,6 +37,11 @@
             <!-- self-modules -->
             <dependency>
                 <groupId>ru.gold.ordance</groupId>
+                <artifactId>rgo-tt-user-service</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>ru.gold.ordance</groupId>
                 <artifactId>rgo-tt-user-persistence</artifactId>
                 <version>${project.version}</version>
             </dependency>
@@ -45,6 +51,11 @@
             <dependency>
                 <groupId>ru.gold.ordance</groupId>
                 <artifactId>rgo-tt-common-persistence</artifactId>
+                <version>${rgo-tt-common.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>ru.gold.ordance</groupId>
+                <artifactId>rgo-tt-common-validator</artifactId>
                 <version>${rgo-tt-common.version}</version>
             </dependency>
             <!-- external modules -->
