@@ -1,0 +1,15 @@
+spring:
+  main:
+    web-application-type: none
+    banner-mode: off
+
+logging:
+  config: classpath:logback-production.xml
+
+persistence:
+  dialect: POSTGRES
+  url: jdbc:postgresql://client-db:5432/client
+  schema: client
+  username: client_appl
+  password: qwe123
+  maxPoolSize: 10
