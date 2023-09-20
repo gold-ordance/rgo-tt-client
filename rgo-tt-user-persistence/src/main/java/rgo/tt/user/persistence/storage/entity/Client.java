@@ -1,13 +1,9 @@
 package rgo.tt.user.persistence.storage.entity;
 
-import java.io.Serial;
-import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-public class Client implements Serializable {
-
-    @Serial private static final long serialVersionUID = 1L;
+public class Client {
 
     private final Long entityId;
     private final String email;
@@ -69,7 +65,7 @@ public class Client implements Serializable {
         return "Client{" +
                 "entityId=" + entityId +
                 ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
+                ", password='<secret>'" +
                 ", createdDate=" + createdDate +
                 ", lastModifiedDate=" + lastModifiedDate +
                 '}';

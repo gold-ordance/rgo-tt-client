@@ -10,11 +10,11 @@ armeria:
         - HTTP
 
 logging:
-  config: classpath:logback-production.xml
+  config: classpath:logback-local.xml
 
 persistence:
   dialect: POSTGRES
-  url: jdbc:postgresql://client-db:5432/client
+  url: jdbc:postgresql://localhost:5433/client
   schema: client
   username: client_appl
   password: qwe123

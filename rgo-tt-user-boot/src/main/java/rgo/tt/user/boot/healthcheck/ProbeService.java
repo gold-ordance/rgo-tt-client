@@ -20,7 +20,7 @@ public class ProbeService {
         return HttpResponse.of(HttpStatus.OK, MediaType.HTML_UTF_8, "{healthy: true}");
     }
 
-    static HttpResponse fail() {
+    static HttpResponse failure() {
         return HttpResponse.of(HttpStatus.BAD_REQUEST, MediaType.HTML_UTF_8, "Not ready");
     }
 
@@ -31,7 +31,7 @@ public class ProbeService {
 
     @Get("/readiness")
     public HttpResponse readinessProbe() {
-        return ready ? ok() : fail();
+        return ready ? ok() : failure();
     }
 
     @EventListener
