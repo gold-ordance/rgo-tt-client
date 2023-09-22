@@ -10,22 +10,22 @@
         <version>23.0.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>rgo-tt-user-boot</artifactId>
+    <artifactId>rgo-tt-user-rest-api</artifactId>
 
     <dependencies>
         <!-- self-modules -->
         <dependency>
             <groupId>ru.gold.ordance</groupId>
-            <artifactId>rgo-tt-user-rest-api</artifactId>
+            <artifactId>rgo-tt-user-service</artifactId>
         </dependency>
         <!-- self-modules -->
 
-        <!-- armeria -->
+        <!-- external modules -->
         <dependency>
-            <groupId>com.linecorp.armeria</groupId>
-            <artifactId>armeria-spring-boot3-starter</artifactId>
+            <groupId>ru.gold.ordance</groupId>
+            <artifactId>rgo-tt-common-rest-api</artifactId>
         </dependency>
-        <!-- armeria -->
+        <!-- external modules -->
 
         <!-- test -->
         <dependency>

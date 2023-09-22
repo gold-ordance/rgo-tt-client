@@ -2,3 +2,9 @@ spring:
   main:
     web-application-type: none
     banner-mode: off
+
+armeria:
+  ports:
+    - port: 8081
+      protocols:
+        - HTTP

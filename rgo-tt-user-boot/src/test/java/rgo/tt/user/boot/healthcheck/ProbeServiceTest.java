@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
-import static rgo.tt.user.boot.healthcheck.ProbeService.fail;
+import static rgo.tt.user.boot.healthcheck.ProbeService.failure;
 import static rgo.tt.user.boot.healthcheck.ProbeService.ok;
 
 class ProbeServiceTest {
@@ -22,7 +22,7 @@ class ProbeServiceTest {
 
     @Test
     void readinessProbe_fail_contextIsNotReady() {
-        HttpResponse expected = fail();
+        HttpResponse expected = failure();
         HttpResponse actual = service.readinessProbe();
         assertThat(status(expected)).isEqualTo(status(actual));
     }

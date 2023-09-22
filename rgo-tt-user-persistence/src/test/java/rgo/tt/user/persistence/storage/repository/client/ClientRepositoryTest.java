@@ -78,7 +78,7 @@ class ClientRepositoryTest {
     }
 
     private List<Client> insertRandomClients() {
-        int limit = ThreadLocalRandom.current().nextInt(CLIENTS_LIMIT);
+        int limit = ThreadLocalRandom.current().nextInt(1, CLIENTS_LIMIT);
         return Stream.generate(EntityGenerator::randomClient)
                 .limit(limit)
                 .map(this::insert)
