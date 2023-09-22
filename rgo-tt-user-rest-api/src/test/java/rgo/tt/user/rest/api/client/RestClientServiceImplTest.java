@@ -1,7 +1,5 @@
 package rgo.tt.user.rest.api.client;
 
-import com.linecorp.armeria.client.WebClient;
-import com.linecorp.armeria.common.MediaType;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -10,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import rgo.tt.common.rest.api.StatusCode;
-import rgo.tt.common.rest.api.utils.SimpleArmeriaServer;
 import rgo.tt.user.persistence.storage.entity.Client;
 import rgo.tt.user.persistence.storage.utils.EntityGenerator;
 import rgo.tt.user.persistence.storage.utils.H2PersistenceUtils;
@@ -30,6 +27,10 @@ import java.util.stream.Stream;
 import static org.assertj.core.api.Assertions.assertThat;
 import static rgo.tt.common.rest.api.utils.RestUtils.fromJson;
 import static rgo.tt.common.rest.api.utils.RestUtils.json;
+import static rgo.tt.common.rest.api.utils.test.ArmeriaClientManager.get;
+import static rgo.tt.common.rest.api.utils.test.ArmeriaClientManager.post;
+import static rgo.tt.common.rest.api.utils.test.ArmeriaServerManager.startServerWithService;
+import static rgo.tt.common.rest.api.utils.test.ArmeriaServerManager.stopServer;
 import static rgo.tt.common.utils.RandomUtils.randomPositiveLong;
 import static rgo.tt.user.persistence.storage.utils.EntityGenerator.randomClient;
 import static rgo.tt.user.rest.api.RequestGenerator.createClientSaveRequest;
@@ -39,38 +40,25 @@ import static rgo.tt.user.rest.api.client.ClientMapper.map;
 @ContextConfiguration(classes = RestConfig.class)
 class RestClientServiceImplTest {
 
-    private static final int PORT = 8081;
-    private static final String HOST = "http://127.0.0.1:" + PORT;
-    private static SimpleArmeriaServer SERVER;
-
     @Autowired private RestClientService restService;
     @Autowired private ClientService service;
 
-    private final WebClient client = WebClient.of();
-
     @BeforeEach
     void setUp() {
-        startServer();
+        startServerWithService(restService);
         H2PersistenceUtils.truncateTables();
-    }
-
-    private void startServer() {
-        if (SERVER == null) {
-            SERVER = new SimpleArmeriaServer(PORT, restService);
-            SERVER.start();
-        }
     }
 
     @AfterAll
     static void afterAll() {
-        SERVER.stop();
+        stopServer();
     }
 
     @Test
     void findAll() {
         List<ClientDto> expected = insertRandomClients();
 
-        String json = get(HOST);
+        String json = get();
         ClientGetListResponse response = fromJson(json, ClientGetListResponse.class);
         List<ClientDto> actual = response.getClients();
 
@@ -83,7 +71,7 @@ class RestClientServiceImplTest {
     void findByEntityId_notFound() {
         long fakeEntityId = randomPositiveLong();
 
-        String json = get(HOST + "/" + fakeEntityId);
+        String json = get("/" + fakeEntityId);
         ClientGetEntityResponse response = fromJson(json, ClientGetEntityResponse.class);
         ClientDto actual = response.getClient();
 
@@ -96,7 +84,7 @@ class RestClientServiceImplTest {
     void findByEntityId_found() {
         ClientDto expected = insert(randomClient());
 
-        String json = get(HOST + "/" + expected.getEntityId());
+        String json = get("/" + expected.getEntityId());
         ClientGetEntityResponse response = fromJson(json, ClientGetEntityResponse.class);
         ClientDto actual = response.getClient();
 
@@ -189,23 +177,6 @@ class RestClientServiceImplTest {
         assertThat(actual.getEntityId()).isNotNull();
         assertThat(actual.getCreatedDate()).isNotNull();
         assertThat(actual.getLastModifiedDate()).isNotNull();
-    }
-
-    private String get(String url) {
-        return client.get(url)
-                .aggregate()
-                .join()
-                .contentUtf8();
-    }
-
-    private String post(String content) {
-        return client.prepare()
-                .post(HOST)
-                .content(MediaType.JSON_UTF_8, content)
-                .execute()
-                .aggregate()
-                .join()
-                .contentUtf8();
     }
 
     private List<ClientDto> insertRandomClients() {

@@ -31,9 +31,7 @@ class ExceptionCommonHandlerTest {
         String errorMsg = randomString();
         ValidateException e = new ValidateException(errorMsg);
 
-        HttpResponse httpResponse = handler.handleException(ctx, req, e);
-        String json = httpResponse.aggregate().join().content().toStringUtf8();
-        ErrorResponse response = fromJson(json, ErrorResponse.class);
+        ErrorResponse response = handle(e);
 
         assertThat(response.getStatus().getMessage()).isEqualTo(errorMsg);
         assertThat(response.getStatus().getStatusCode()).isEqualTo(INVALID_RQ);
@@ -44,9 +42,7 @@ class ExceptionCommonHandlerTest {
         String errorMsg = randomString();
         UniqueViolationException e = new UniqueViolationException(errorMsg);
 
-        HttpResponse httpResponse = handler.handleException(ctx, req, e);
-        String json = httpResponse.aggregate().join().content().toStringUtf8();
-        ErrorResponse response = fromJson(json, ErrorResponse.class);
+        ErrorResponse response = handle(e);
 
         assertThat(response.getStatus().getMessage()).isEqualTo(errorMsg);
         assertThat(response.getStatus().getStatusCode()).isEqualTo(INVALID_ENTITY);
@@ -56,11 +52,15 @@ class ExceptionCommonHandlerTest {
     void handleException_undefinedException() {
         UndefinedException e = new UndefinedException();
 
-        HttpResponse httpResponse = handler.handleException(ctx, req, e);
-        String json = httpResponse.aggregate().join().content().toStringUtf8();
-        ErrorResponse response = fromJson(json, ErrorResponse.class);
+        ErrorResponse response = handle(e);
 
         assertThat(response.getStatus().getStatusCode()).isEqualTo(ERROR);
+    }
+
+    private ErrorResponse handle(Exception e) {
+        HttpResponse httpResponse = handler.handleException(ctx, req, e);
+        String json = httpResponse.aggregate().join().content().toStringUtf8();
+        return fromJson(json, ErrorResponse.class);
     }
 
     private static class UndefinedException extends RuntimeException {

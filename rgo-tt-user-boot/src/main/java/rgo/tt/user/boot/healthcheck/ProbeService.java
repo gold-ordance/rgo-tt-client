@@ -9,7 +9,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 
-@SuppressWarnings("unused")
 public class ProbeService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ProbeService.class);
