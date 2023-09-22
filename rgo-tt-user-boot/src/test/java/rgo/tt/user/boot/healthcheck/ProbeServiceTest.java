@@ -17,14 +17,14 @@ class ProbeServiceTest {
     void livenessProbe_ok() {
         HttpResponse expected = ok();
         HttpResponse actual = service.livenessProbe();
-        assertThat(status(expected)).isEqualTo(status(actual));
+        assertThat(status(actual)).isEqualTo(status(expected));
     }
 
     @Test
     void readinessProbe_fail_contextIsNotReady() {
         HttpResponse expected = failure();
         HttpResponse actual = service.readinessProbe();
-        assertThat(status(expected)).isEqualTo(status(actual));
+        assertThat(status(actual)).isEqualTo(status(expected));
     }
 
     @Test
@@ -33,7 +33,7 @@ class ProbeServiceTest {
 
         HttpResponse expected = ok();
         HttpResponse actual = service.readinessProbe();
-        assertThat(status(expected)).isEqualTo(status(actual));
+        assertThat(status(actual)).isEqualTo(status(expected));
     }
 
     private HttpStatus status(HttpResponse response) {

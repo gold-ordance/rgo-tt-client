@@ -64,7 +64,7 @@ class InternalRestClientServiceTest {
 
         assertThat(response.getStatus().getStatusCode()).isEqualTo(StatusCode.SUCCESS);
         assertThat(response.getStatus().getMessage()).isNull();
-        assertThat(expected).containsExactlyInAnyOrderElementsOf(actual);
+        assertThat(actual).containsExactlyInAnyOrderElementsOf(expected);
     }
 
     @Test
@@ -90,7 +90,7 @@ class InternalRestClientServiceTest {
 
         assertThat(response.getStatus().getStatusCode()).isEqualTo(StatusCode.SUCCESS);
         assertThat(response.getStatus().getMessage()).isNull();
-        assertThat(expected).isEqualTo(actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -117,7 +117,7 @@ class InternalRestClientServiceTest {
         ClientDto actual = response.getClient();
 
         assertThat(response.getStatus().getStatusCode()).isEqualTo(StatusCode.STORED);
-        assertThat(rq.getEmail()).isEqualTo(actual.getEmail());
+        assertThat(actual.getEmail()).isEqualTo(rq.getEmail());
         assertThat(actual.getEntityId()).isNotNull();
         assertThat(actual.getCreatedDate()).isNotNull();
         assertThat(actual.getLastModifiedDate()).isNotNull();

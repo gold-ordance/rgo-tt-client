@@ -18,14 +18,7 @@ class ClientMapperTest {
     void map_toClientDto() {
         Client client = randomClient();
         ClientDto dto = ClientMapper.map(client);
-        compare(client, dto);
-    }
-
-    private void compare(Client client, ClientDto dto) {
-        assertThat(client.getEntityId()).isEqualTo(dto.getEntityId());
-        assertThat(client.getEmail()).isEqualTo(dto.getEmail());
-        assertThat(client.getCreatedDate()).isEqualTo(dto.getCreatedDate());
-        assertThat(client.getLastModifiedDate()).isEqualTo(dto.getLastModifiedDate());
+        compare(dto, client);
     }
 
     @Test
@@ -35,7 +28,7 @@ class ClientMapperTest {
 
         assertThat(clients).hasSize(1);
         assertThat(dtoList).hasSize(1);
-        compare(clients.get(0), dtoList.get(0));
+        compare(dtoList.get(0), clients.get(0));
     }
 
     @Test
@@ -43,10 +36,17 @@ class ClientMapperTest {
         ClientSaveRequest rq = createClientSaveRequest();
         Client client = ClientMapper.map(rq);
 
-        assertThat(rq.getEmail()).isEqualTo(client.getEmail());
-        assertThat(rq.getPassword()).isEqualTo(client.getPassword());
+        assertThat(client.getEmail()).isEqualTo(rq.getEmail());
+        assertThat(client.getPassword()).isEqualTo(rq.getPassword());
 
         List<String> nonEmptyFields = List.of("email", "password");
         validateNullFieldsExcept(client, nonEmptyFields);
+    }
+
+    private void compare( ClientDto dto, Client client) {
+        assertThat(dto.getEntityId()).isEqualTo(client.getEntityId());
+        assertThat(dto.getEmail()).isEqualTo(client.getEmail());
+        assertThat(dto.getCreatedDate()).isEqualTo(client.getCreatedDate());
+        assertThat(dto.getLastModifiedDate()).isEqualTo(client.getLastModifiedDate());
     }
 }

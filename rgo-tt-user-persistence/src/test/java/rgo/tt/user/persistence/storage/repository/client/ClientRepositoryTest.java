@@ -6,11 +6,11 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import rgo.tt.common.exceptions.UniqueViolationException;
 import rgo.tt.user.persistence.config.PersistenceConfig;
 import rgo.tt.user.persistence.storage.entity.Client;
 import rgo.tt.user.persistence.storage.utils.EntityGenerator;
 import rgo.tt.user.persistence.storage.utils.H2PersistenceUtils;
-import rgo.tt.common.exceptions.UniqueViolationException;
 
 import java.util.List;
 import java.util.Optional;
@@ -19,9 +19,9 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
-import static rgo.tt.user.persistence.storage.utils.EntityGenerator.randomClient;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static rgo.tt.common.utils.RandomUtils.randomPositiveLong;
+import static rgo.tt.user.persistence.storage.utils.EntityGenerator.randomClient;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = PersistenceConfig.class)
@@ -40,7 +40,7 @@ class ClientRepositoryTest {
     void findAll() {
         List<Client> expected = insertRandomClients();
         List<Client> actual = repository.findAll();
-        assertThat(expected).containsExactlyInAnyOrderElementsOf(actual);
+        assertThat(actual).containsExactlyInAnyOrderElementsOf(expected);
     }
 
     @Test
@@ -56,8 +56,9 @@ class ClientRepositoryTest {
         Client expected = insert(created);
 
         Optional<Client> actual = repository.findByEntityId(expected.getEntityId());
-        assertThat(actual).isPresent();
-        assertThat(expected).isEqualTo(actual.get());
+        assertThat(actual)
+                .isPresent()
+                .contains(expected);
     }
 
     @Test
@@ -65,8 +66,8 @@ class ClientRepositoryTest {
         Client expected = randomClient();
 
         Client actual = repository.save(expected);
-        assertThat(expected.getEmail()).isEqualTo(actual.getEmail());
-        assertThat(expected.getPassword()).isEqualTo(actual.getPassword());
+        assertThat(actual.getEmail()).isEqualTo(expected.getEmail());
+        assertThat(actual.getPassword()).isEqualTo(expected.getPassword());
     }
 
     @Test
@@ -74,7 +75,8 @@ class ClientRepositoryTest {
         Client created = randomClient();
         insert(created);
 
-        assertThatExceptionOfType(UniqueViolationException.class).isThrownBy(() -> insert(created));
+        assertThatThrownBy(() -> insert(created))
+                .isInstanceOf(UniqueViolationException.class);
     }
 
     private List<Client> insertRandomClients() {
