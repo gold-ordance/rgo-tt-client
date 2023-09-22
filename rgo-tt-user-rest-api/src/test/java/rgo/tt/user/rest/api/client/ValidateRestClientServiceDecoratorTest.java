@@ -7,12 +7,10 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import rgo.tt.common.rest.api.ErrorResponse;
 import rgo.tt.common.rest.api.StatusCode;
 import rgo.tt.user.rest.api.RestConfig;
-import rgo.tt.user.rest.api.client.dto.ClientDto;
 import rgo.tt.user.rest.api.client.request.ClientSaveRequest;
-import rgo.tt.user.rest.api.client.response.ClientGetEntityResponse;
-import rgo.tt.user.rest.api.client.response.ClientModifyResponse;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static rgo.tt.common.rest.api.utils.RestUtils.fromJson;
@@ -45,12 +43,22 @@ class ValidateRestClientServiceDecoratorTest {
         long negativeEntityId = -randomPositiveLong();
 
         String json = get("/" + negativeEntityId);
-        ClientGetEntityResponse response = fromJson(json, ClientGetEntityResponse.class);
-        ClientDto actual = response.getClient();
+        ErrorResponse response = fromJson(json, ErrorResponse.class);
 
         assertThat(response.getStatus().getStatusCode()).isEqualTo(StatusCode.INVALID_RQ);
         assertThat(response.getStatus().getMessage()).isEqualTo("The entityId is negative.");
-        assertThat(actual).isNull();
+    }
+
+    @Test
+    void save_invalidRq_emailIsNull() {
+        ClientSaveRequest rq = createClientSaveRequest();
+        rq.setEmail(null);
+
+        String json = post(json(rq));
+        ErrorResponse response = fromJson(json, ErrorResponse.class);
+
+        assertThat(response.getStatus().getStatusCode()).isEqualTo(StatusCode.INVALID_RQ);
+        assertThat(response.getStatus().getMessage()).isEqualTo("The email is null.");
     }
 
     @Test
@@ -59,12 +67,10 @@ class ValidateRestClientServiceDecoratorTest {
         rq.setEmail("");
 
         String json = post(json(rq));
-        ClientModifyResponse response = fromJson(json, ClientModifyResponse.class);
-        ClientDto actual = response.getClient();
+        ErrorResponse response = fromJson(json, ErrorResponse.class);
 
         assertThat(response.getStatus().getStatusCode()).isEqualTo(StatusCode.INVALID_RQ);
         assertThat(response.getStatus().getMessage()).isEqualTo("The email is empty.");
-        assertThat(actual).isNull();
     }
 
     @Test
@@ -73,12 +79,10 @@ class ValidateRestClientServiceDecoratorTest {
         rq.setPassword(null);
 
         String json = post(json(rq));
-        ClientModifyResponse response = fromJson(json, ClientModifyResponse.class);
-        ClientDto actual = response.getClient();
+        ErrorResponse response = fromJson(json, ErrorResponse.class);
 
         assertThat(response.getStatus().getStatusCode()).isEqualTo(StatusCode.INVALID_RQ);
         assertThat(response.getStatus().getMessage()).isEqualTo("The password is null.");
-        assertThat(actual).isNull();
     }
 
     @Test
@@ -87,11 +91,9 @@ class ValidateRestClientServiceDecoratorTest {
         rq.setPassword("");
 
         String json = post(json(rq));
-        ClientModifyResponse response = fromJson(json, ClientModifyResponse.class);
-        ClientDto actual = response.getClient();
+        ErrorResponse response = fromJson(json, ErrorResponse.class);
 
         assertThat(response.getStatus().getStatusCode()).isEqualTo(StatusCode.INVALID_RQ);
         assertThat(response.getStatus().getMessage()).isEqualTo("The password is empty.");
-        assertThat(actual).isNull();
     }
 }

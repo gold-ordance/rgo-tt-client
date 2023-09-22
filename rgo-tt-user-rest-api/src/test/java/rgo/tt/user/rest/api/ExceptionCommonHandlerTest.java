@@ -59,7 +59,7 @@ class ExceptionCommonHandlerTest {
 
     private ErrorResponse handle(Exception e) {
         HttpResponse httpResponse = handler.handleException(ctx, req, e);
-        String json = httpResponse.aggregate().join().content().toStringUtf8();
+        String json = httpResponse.aggregate().join().contentUtf8();
         return fromJson(json, ErrorResponse.class);
     }
 

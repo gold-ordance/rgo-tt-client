@@ -7,6 +7,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import rgo.tt.common.rest.api.ErrorResponse;
 import rgo.tt.common.rest.api.StatusCode;
 import rgo.tt.user.persistence.storage.entity.Client;
 import rgo.tt.user.persistence.storage.utils.EntityGenerator;
@@ -72,12 +73,10 @@ class InternalRestClientServiceTest {
         long fakeEntityId = randomPositiveLong();
 
         String json = get("/" + fakeEntityId);
-        ClientGetEntityResponse response = fromJson(json, ClientGetEntityResponse.class);
-        ClientDto actual = response.getClient();
+        ErrorResponse response = fromJson(json, ErrorResponse.class);
 
         assertThat(response.getStatus().getStatusCode()).isEqualTo(StatusCode.NOT_FOUND);
         assertThat(response.getStatus().getMessage()).isNull();
-        assertThat(actual).isNull();
     }
 
     @Test
@@ -100,12 +99,10 @@ class InternalRestClientServiceTest {
         rq.setEmail(saved.getEmail());
 
         String json = post(json(rq));
-        ClientModifyResponse response = fromJson(json, ClientModifyResponse.class);
-        ClientDto actual = response.getClient();
+        ErrorResponse response = fromJson(json, ErrorResponse.class);
 
         assertThat(response.getStatus().getStatusCode()).isEqualTo(StatusCode.INVALID_ENTITY);
 //        assertThat(response.getStatus().getMessage()).isEqualTo("");
-        assertThat(actual).isNull();
     }
 
     @Test
