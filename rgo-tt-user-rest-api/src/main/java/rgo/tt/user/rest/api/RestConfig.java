@@ -3,8 +3,9 @@ package rgo.tt.user.rest.api;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+import rgo.tt.user.rest.api.client.InternalRestClientService;
 import rgo.tt.user.rest.api.client.RestClientService;
-import rgo.tt.user.rest.api.client.RestClientServiceImpl;
+import rgo.tt.user.rest.api.client.ValidateRestClientServiceDecorator;
 import rgo.tt.user.service.ServiceConfig;
 import rgo.tt.user.service.client.ClientService;
 
@@ -14,6 +15,7 @@ public class RestConfig {
 
     @Bean
     public RestClientService restClientService(ClientService service) {
-        return new RestClientServiceImpl(service);
+        return new ValidateRestClientServiceDecorator(
+                new InternalRestClientService(service));
     }
 }

@@ -38,7 +38,7 @@ import static rgo.tt.user.rest.api.client.ClientMapper.map;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = RestConfig.class)
-class RestClientServiceImplTest {
+class InternalRestClientServiceTest {
 
     @Autowired private RestClientService restService;
     @Autowired private ClientService service;
@@ -91,62 +91,6 @@ class RestClientServiceImplTest {
         assertThat(response.getStatus().getStatusCode()).isEqualTo(StatusCode.SUCCESS);
         assertThat(response.getStatus().getMessage()).isNull();
         assertThat(expected).isEqualTo(actual);
-    }
-
-    @Test
-    void save_emailIsNull() {
-        ClientSaveRequest rq = createClientSaveRequest();
-        rq.setEmail(null);
-
-        String json = post(json(rq));
-        ClientModifyResponse response = fromJson(json, ClientModifyResponse.class);
-        ClientDto actual = response.getClient();
-
-        assertThat(response.getStatus().getStatusCode()).isEqualTo(StatusCode.INVALID_RQ);
-        assertThat(response.getStatus().getMessage()).isEqualTo("The email is null.");
-        assertThat(actual).isNull();
-    }
-
-    @Test
-    void save_emailIsEmpty() {
-        ClientSaveRequest rq = createClientSaveRequest();
-        rq.setEmail("");
-
-        String json = post(json(rq));
-        ClientModifyResponse response = fromJson(json, ClientModifyResponse.class);
-        ClientDto actual = response.getClient();
-
-        assertThat(response.getStatus().getStatusCode()).isEqualTo(StatusCode.INVALID_RQ);
-        assertThat(response.getStatus().getMessage()).isEqualTo("The email is empty.");
-        assertThat(actual).isNull();
-    }
-
-    @Test
-    void save_passwordIsNull() {
-        ClientSaveRequest rq = createClientSaveRequest();
-        rq.setPassword(null);
-
-        String json = post(json(rq));
-        ClientModifyResponse response = fromJson(json, ClientModifyResponse.class);
-        ClientDto actual = response.getClient();
-
-        assertThat(response.getStatus().getStatusCode()).isEqualTo(StatusCode.INVALID_RQ);
-        assertThat(response.getStatus().getMessage()).isEqualTo("The password is null.");
-        assertThat(actual).isNull();
-    }
-
-    @Test
-    void save_passwordIsEmpty() {
-        ClientSaveRequest rq = createClientSaveRequest();
-        rq.setPassword("");
-
-        String json = post(json(rq));
-        ClientModifyResponse response = fromJson(json, ClientModifyResponse.class);
-        ClientDto actual = response.getClient();
-
-        assertThat(response.getStatus().getStatusCode()).isEqualTo(StatusCode.INVALID_RQ);
-        assertThat(response.getStatus().getMessage()).isEqualTo("The password is empty.");
-        assertThat(actual).isNull();
     }
 
     @Test

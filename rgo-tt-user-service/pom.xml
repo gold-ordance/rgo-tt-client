@@ -20,13 +20,6 @@
         </dependency>
         <!-- self-modules -->
 
-        <!-- external modules -->
-        <dependency>
-            <groupId>ru.gold.ordance</groupId>
-            <artifactId>rgo-tt-common-validator</artifactId>
-        </dependency>
-        <!-- external modules -->
-
         <!-- test -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
