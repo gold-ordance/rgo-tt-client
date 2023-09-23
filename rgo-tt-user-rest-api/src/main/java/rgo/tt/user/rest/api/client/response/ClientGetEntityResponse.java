@@ -32,4 +32,12 @@ public class ClientGetEntityResponse implements Response {
     public void setClient(ClientDto client) {
         this.client = client;
     }
+
+    @Override
+    public String toString() {
+        return "ClientGetEntityResponse{" +
+                "status=" + status +
+                ", client=" + client +
+                '}';
+    }
 }

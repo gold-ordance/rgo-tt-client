@@ -31,6 +31,13 @@
         </dependency>
         <!-- external modules -->
 
+        <!-- utils -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+        </dependency>
+        <!-- utils -->
+
         <!-- test -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

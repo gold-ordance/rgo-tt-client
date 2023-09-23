@@ -34,4 +34,12 @@ public class ClientGetListResponse implements Response {
     public void setClients(List<ClientDto> clients) {
         this.clients = clients;
     }
+
+    @Override
+    public String toString() {
+        return "ClientGetListResponse{" +
+                "status=" + status +
+                ", clients=<size=" + clients.size() + ">" +
+                '}';
+    }
 }

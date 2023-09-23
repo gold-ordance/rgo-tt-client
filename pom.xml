@@ -31,6 +31,7 @@
         <rgo-tt-common.version>23.0.0-SNAPSHOT</rgo-tt-common.version>
 
         <armeria.version>1.25.2</armeria.version>
+        <commons-lang3.version>3.13.0</commons-lang3.version>
     </properties>
 
     <dependencyManagement>
@@ -78,6 +79,14 @@
                 <version>${armeria.version}</version>
             </dependency>
             <!-- armeria -->
+
+            <!-- utils -->
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>${commons-lang3.version}</version>
+            </dependency>
+            <!-- utils -->
         </dependencies>
     </dependencyManagement>
 

@@ -37,4 +37,12 @@ public class ClientModifyResponse implements Response {
     public void setClient(ClientDto client) {
         this.client = client;
     }
+
+    @Override
+    public String toString() {
+        return "ClientModifyResponse{" +
+                "status=" + status +
+                ", client=" + client +
+                '}';
+    }
 }
