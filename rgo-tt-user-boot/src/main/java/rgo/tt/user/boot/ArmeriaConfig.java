@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import rgo.tt.common.armeria.config.ArmeriaCommonConfig;
-import rgo.tt.user.boot.healthcheck.ProbeService;
+import rgo.tt.common.armeria.service.ProbeService;
 import rgo.tt.user.rest.api.client.RestClientService;
 
 import java.util.function.Function;
@@ -21,18 +21,15 @@ public class ArmeriaConfig {
 
     @Autowired private RestClientService restClientService;
 
-    @Autowired private Function<? super HttpService, CorsService> corsDecorator;
+    @Autowired private ProbeService probeService;
 
-    @Bean
-    public ProbeService probeService() {
-        return new ProbeService();
-    }
+    @Autowired private Function<? super HttpService, CorsService> corsDecorator;
 
     @Bean
     public ArmeriaServerConfigurator armeriaConfigurator() {
         return serverBuilder ->
                 serverBuilder
-                        .annotatedService("/internal", probeService())
+                        .annotatedService("/internal", probeService)
                         .annotatedService("/clients", restClientService)
                         .serviceUnder("/docs", docService())
                         .decorator(LoggingService.newDecorator())
