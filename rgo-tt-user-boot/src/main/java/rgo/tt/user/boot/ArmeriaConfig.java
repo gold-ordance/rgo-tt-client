@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import rgo.tt.common.armeria.config.ArmeriaCommonConfig;
+import rgo.tt.common.armeria.service.HeadersService;
 import rgo.tt.common.armeria.service.ProbeService;
 import rgo.tt.user.rest.api.client.RestClientService;
 
@@ -24,6 +25,7 @@ public class ArmeriaConfig {
     @Autowired private ProbeService probeService;
 
     @Autowired private Function<? super HttpService, CorsService> corsDecorator;
+    @Autowired private Function<? super HttpService, HeadersService> headersDecorator;
 
     @Bean
     public ArmeriaServerConfigurator armeriaConfigurator() {
@@ -33,6 +35,7 @@ public class ArmeriaConfig {
                         .annotatedService("/clients", restClientService)
                         .serviceUnder("/docs", docService())
                         .decorator(LoggingService.newDecorator())
+                        .decorator(headersDecorator)
                         .decorator(corsDecorator);
     }
 
