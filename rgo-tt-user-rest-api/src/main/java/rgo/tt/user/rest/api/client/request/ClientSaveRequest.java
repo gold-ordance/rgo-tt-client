@@ -27,7 +27,7 @@ public class ClientSaveRequest {
     public String toString() {
         return "ClientSaveRequest{" +
                 "email='" + email + '\'' +
-                ", password='" + password + '\'' +
+                ", password=<secret>" +
                 '}';
     }
 }
