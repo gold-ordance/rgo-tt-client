@@ -21,7 +21,6 @@ public class ExceptionCommonHandler implements ExceptionHandlerFunction {
             return mapToHttp(response);
         }
 
-        // TODO: осмысленное сообщение ошибки
         if (cause instanceof UniqueViolationException e) {
             Response response = ErrorResponse.invalidEntity(e.getMessage());
             return mapToHttp(response);

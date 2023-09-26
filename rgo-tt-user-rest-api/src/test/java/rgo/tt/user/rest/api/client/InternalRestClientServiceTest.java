@@ -102,7 +102,7 @@ class InternalRestClientServiceTest {
         ErrorResponse response = fromJson(json, ErrorResponse.class);
 
         assertThat(response.getStatus().getStatusCode()).isEqualTo(StatusCode.INVALID_ENTITY);
-//        assertThat(response.getStatus().getMessage()).isEqualTo("");
+        assertThat(response.getStatus().getMessage()).isNotNull();
     }
 
     @Test
