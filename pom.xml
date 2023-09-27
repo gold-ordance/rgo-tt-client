@@ -29,11 +29,10 @@
     <properties>
         <java.version>17</java.version>
 
-        <rgo-tt-common.version>23.0.0-SNAPSHOT</rgo-tt-common.version>
-
         <armeria.version>1.25.2</armeria.version>
-        <jvm-extras.version>0.2.2</jvm-extras.version>
         <commons-lang3.version>3.13.0</commons-lang3.version>
+        <jvm-extras.version>0.2.2</jvm-extras.version>
+        <rgo-tt-common.version>23.0.0-SNAPSHOT</rgo-tt-common.version>
     </properties>
 
     <dependencyManagement>
