@@ -23,6 +23,7 @@
         <module>rgo-tt-user-persistence</module>
         <module>rgo-tt-user-service</module>
         <module>rgo-tt-user-rest-api</module>
+        <module>rgo-tt-user-metrics</module>
     </modules>
 
     <properties>
@@ -31,6 +32,7 @@
         <rgo-tt-common.version>23.0.0-SNAPSHOT</rgo-tt-common.version>
 
         <armeria.version>1.25.2</armeria.version>
+        <jvm-extras.version>0.2.2</jvm-extras.version>
         <commons-lang3.version>3.13.0</commons-lang3.version>
     </properties>
 
@@ -50,6 +52,11 @@
             <dependency>
                 <groupId>ru.gold.ordance</groupId>
                 <artifactId>rgo-tt-user-persistence</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>ru.gold.ordance</groupId>
+                <artifactId>rgo-tt-user-metrics</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <!-- self-modules -->
@@ -84,6 +91,14 @@
                 <version>${armeria.version}</version>
             </dependency>
             <!-- armeria -->
+
+            <!-- metrics -->
+            <dependency>
+                <groupId>io.github.mweirauch</groupId>
+                <artifactId>micrometer-jvm-extras</artifactId>
+                <version>${jvm-extras.version}</version>
+            </dependency>
+            <!-- metrics -->
 
             <!-- utils -->
             <dependency>
