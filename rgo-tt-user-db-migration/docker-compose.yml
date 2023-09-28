@@ -13,7 +13,6 @@ services:
       timeout: 5s
       retries: 5
 
-
   flyway-manual-client:
     image: flyway/flyway:latest
     container_name: flyway_manual_client
@@ -28,7 +27,6 @@ services:
       postgresql:
         condition: service_healthy
 
-
   flyway-migration-client:
     image: flyway/flyway:latest
     container_name: flyway_migration_client
@@ -42,7 +40,6 @@ services:
     depends_on:
       flyway-manual-client:
         condition: service_completed_successfully
-
 
   stub-container:
     image: ogajun/stub-container:latest
