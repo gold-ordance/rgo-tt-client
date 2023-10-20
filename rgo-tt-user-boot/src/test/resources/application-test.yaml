@@ -13,3 +13,13 @@ armeria:
     - port: 8081
       protocols:
         - HTTP
+
+rate-limiter:
+  services:
+    ValidateRestClientServiceDecorator:
+      - method: findAll
+        limit: 2000
+      - method: findByEntityId
+        limit: 2000
+      - method: save
+        limit: 2000
