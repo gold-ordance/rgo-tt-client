@@ -18,8 +18,8 @@ rate-limiter:
   services:
     ValidateRestClientServiceDecorator:
       - method: findAll
-        limit: 2000
+        limit: 1
       - method: findByEntityId
-        limit: 2000
+        limit: 1
       - method: save
-        limit: 2000
+        limit: 1
