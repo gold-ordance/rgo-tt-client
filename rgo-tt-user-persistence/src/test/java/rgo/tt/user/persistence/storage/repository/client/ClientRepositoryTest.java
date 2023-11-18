@@ -21,6 +21,7 @@ import java.util.stream.Stream;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static rgo.tt.common.utils.RandomUtils.randomPositiveLong;
+import static rgo.tt.common.utils.RandomUtils.randomString;
 import static rgo.tt.user.persistence.storage.utils.EntityGenerator.randomClient;
 
 @ExtendWith(SpringExtension.class)
@@ -47,6 +48,24 @@ class ClientRepositoryTest {
     void findByEntityId_notFound() {
         long fakeId = randomPositiveLong();
         Optional<Client> actual = repository.findByEntityId(fakeId);
+        assertThat(actual).isNotPresent();
+    }
+
+    @Test
+    void findByEmail_found() {
+        Client created = randomClient();
+        Client expected = insert(created);
+
+        Optional<Client> actual = repository.findByEmail(expected.getEmail());
+        assertThat(actual)
+                .isPresent()
+                .contains(expected);
+    }
+
+    @Test
+    void findByEmail_notFound() {
+        String fakeEmail = randomString();
+        Optional<Client> actual = repository.findByEmail(fakeEmail);
         assertThat(actual).isNotPresent();
     }
 

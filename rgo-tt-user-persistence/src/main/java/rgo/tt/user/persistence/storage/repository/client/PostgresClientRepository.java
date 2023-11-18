@@ -37,6 +37,13 @@ public class PostgresClientRepository implements ClientRepository {
     }
 
     @Override
+    public Optional<Client> findByEmail(String email) {
+        SqlReadStatement<Client> statement = ClientSqlStatement.findByEmail(email);
+        SqlReadResult<Client> result = jdbc.read(statement);
+        return getFirstEntity(result.getEntities());
+    }
+
+    @Override
     public Client save(Client client) {
         FetchEntityById<Client> function = this::getEntityById;
         SqlCreateStatement<Client> statement = ClientSqlStatement.save(client, function);

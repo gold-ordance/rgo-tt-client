@@ -26,6 +26,11 @@ public class InternalClientService implements ClientService {
     }
 
     @Override
+    public Optional<Client> findByEmail(String email) {
+        return repository.findByEmail(email);
+    }
+
+    @Override
     public Client save(Client client) {
         return repository.save(client);
     }

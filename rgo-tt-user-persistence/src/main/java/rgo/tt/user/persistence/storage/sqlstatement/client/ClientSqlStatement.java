@@ -22,6 +22,11 @@ public final class ClientSqlStatement {
         return SqlReadStatement.from(request, CLIENT_ROW_MAPPER);
     }
 
+    public static SqlReadStatement<Client> findByEmail(String email) {
+        SqlRequest request = ClientSqlRequest.findByEmail(email);
+        return SqlReadStatement.from(request, CLIENT_ROW_MAPPER);
+    }
+
     public static SqlCreateStatement<Client> save(Client client, FetchEntityById<Client> function) {
         SqlRequest request = ClientSqlRequest.save(client);
         return SqlCreateStatement.from(request, function);

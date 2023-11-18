@@ -21,6 +21,12 @@ public final class ClientSqlRequest {
         return new SqlRequest(request, params);
     }
 
+    public static SqlRequest findByEmail(String email) {
+        String request = select() + "WHERE email = :email";
+        MapSqlParameterSource params = new MapSqlParameterSource("email", email);
+        return new SqlRequest(request, params);
+    }
+
     public static SqlRequest save(Client client) {
         String request = """
                 INSERT INTO %s(email, password)

@@ -11,5 +11,7 @@ public interface ClientService {
 
     Optional<Client> findByEntityId(Long entityId);
 
+    Optional<Client> findByEmail(String email);
+
     Client save(Client client);
 }

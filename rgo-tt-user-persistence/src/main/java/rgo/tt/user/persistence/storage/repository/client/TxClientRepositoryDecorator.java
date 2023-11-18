@@ -22,6 +22,11 @@ public class TxClientRepositoryDecorator implements ClientRepository {
     }
 
     @Override
+    public Optional<Client> findByEmail(String email) {
+        return tx.tx(() -> delegate.findByEmail(email));
+    }
+
+    @Override
     public Optional<Client> findByEntityId(Long entityId) {
         return tx.tx(() -> delegate.findByEntityId(entityId));
     }
