@@ -1,18 +1,16 @@
 package rgo.tt.user.persistence.storage.repository.client;
 
-import rgo.tt.user.persistence.storage.entity.Client;
-import rgo.tt.user.persistence.storage.sqlstatement.client.ClientSqlStatement;
 import rgo.tt.common.persistence.StatementJdbcTemplateAdapter;
 import rgo.tt.common.persistence.sqlresult.SqlCreateResult;
 import rgo.tt.common.persistence.sqlresult.SqlReadResult;
 import rgo.tt.common.persistence.sqlstatement.FetchEntityById;
 import rgo.tt.common.persistence.sqlstatement.SqlCreateStatement;
 import rgo.tt.common.persistence.sqlstatement.SqlReadStatement;
+import rgo.tt.user.persistence.storage.entity.Client;
+import rgo.tt.user.persistence.storage.sqlstatement.client.ClientSqlStatement;
 
 import java.util.List;
 import java.util.Optional;
-
-import static rgo.tt.common.persistence.utils.CommonPersistenceUtils.getFirstEntity;
 
 public class PostgresClientRepository implements ClientRepository {
 
@@ -33,14 +31,14 @@ public class PostgresClientRepository implements ClientRepository {
     public Optional<Client> findByEntityId(Long entityId) {
         SqlReadStatement<Client> statement = ClientSqlStatement.findByEntityId(entityId);
         SqlReadResult<Client> result = jdbc.read(statement);
-        return getFirstEntity(result.getEntities());
+        return result.getEntity();
     }
 
     @Override
     public Optional<Client> findByEmail(String email) {
         SqlReadStatement<Client> statement = ClientSqlStatement.findByEmail(email);
         SqlReadResult<Client> result = jdbc.read(statement);
-        return getFirstEntity(result.getEntities());
+        return result.getEntity();
     }
 
     @Override
