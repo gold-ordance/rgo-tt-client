@@ -6,8 +6,6 @@ spring:
 armeria:
   ports:
     - port: 8081
-      protocols:
-        - HTTP
 
 logging:
   config: classpath:logback-local.xml

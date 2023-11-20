@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+package rgo.tt.user.grpc;
+
+service ClientService {
+  rpc findByUsername(ClientGetByUsernameRequest) returns (ClientGetEntityResponse);
+}
+
+message ClientGetByUsernameRequest {
+  string username = 1;
+}
+
+message ClientGetEntityResponse {
+  string username = 1;
+  string password = 2;
+  repeated string authorities = 3;
+}

@@ -24,6 +24,8 @@
         <module>rgo-tt-user-service</module>
         <module>rgo-tt-user-rest-api</module>
         <module>rgo-tt-user-metrics</module>
+        <module>rgo-tt-user-grpc-api</module>
+        <module>rgo-tt-user-grpc-service</module>
     </modules>
 
     <properties>
@@ -53,6 +55,16 @@
             <dependency>
                 <groupId>ru.gold.ordance</groupId>
                 <artifactId>rgo-tt-user-metrics</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>ru.gold.ordance</groupId>
+                <artifactId>rgo-tt-user-grpc-api</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>ru.gold.ordance</groupId>
+                <artifactId>rgo-tt-user-grpc-service</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <!-- self-modules -->

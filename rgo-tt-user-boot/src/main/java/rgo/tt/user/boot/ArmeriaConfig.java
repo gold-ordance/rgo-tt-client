@@ -4,6 +4,7 @@ import com.linecorp.armeria.server.HttpService;
 import com.linecorp.armeria.server.ServiceNaming;
 import com.linecorp.armeria.server.cors.CorsService;
 import com.linecorp.armeria.server.docs.DocService;
+import com.linecorp.armeria.server.grpc.GrpcService;
 import com.linecorp.armeria.server.logging.LoggingService;
 import com.linecorp.armeria.server.metric.MetricCollectingService;
 import com.linecorp.armeria.server.metric.PrometheusExpositionService;
@@ -15,8 +16,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import rgo.tt.common.armeria.ArmeriaCommonConfig;
-import rgo.tt.common.armeria.headers.HeadersService;
 import rgo.tt.common.armeria.ProbeService;
+import rgo.tt.common.armeria.headers.HeadersService;
+import rgo.tt.user.grpc.service.client.GrpcClientService;
 import rgo.tt.user.rest.api.client.RestClientService;
 
 import java.util.function.Function;
@@ -26,6 +28,7 @@ import java.util.function.Function;
 public class ArmeriaConfig {
 
     @Autowired private RestClientService restClientService;
+    @Autowired private GrpcClientService grpcClientService;
 
     @Autowired private ProbeService probeService;
 
@@ -43,6 +46,7 @@ public class ArmeriaConfig {
                         .defaultServiceNaming(ServiceNaming.simpleTypeName())
                         .annotatedService("/internal", probeService)
                         .annotatedService("/clients", restClientService)
+                        .service(GrpcService.builder().addService(grpcClientService).useBlockingTaskExecutor(true).build())
                         .serviceUnder("/internal/metrics", PrometheusExpositionService.of(registry.getPrometheusRegistry()))
                         .serviceUnder("/docs", docService())
                         .decorator(LoggingService.newDecorator())
