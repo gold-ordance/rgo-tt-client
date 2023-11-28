@@ -14,7 +14,7 @@ app:
     maxAgeSeconds: 3600
 
   rate-limiter:
-    services:
+    rest-services:
       ValidateRestClientServiceDecorator:
         - method: findAll
           limit: 1
@@ -22,3 +22,6 @@ app:
           limit: 1
         - method: save
           limit: 1
+    grpc-services:
+      - method: /rgo.tt.user.grpc.ClientService/findByUsername
+        limit: 1

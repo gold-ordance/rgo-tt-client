@@ -20,7 +20,7 @@ app:
     dialect: H2
 
   rate-limiter:
-    services:
+    rest-services:
       ValidateRestClientServiceDecorator:
         - method: findAll
           limit: 2000
@@ -28,3 +28,6 @@ app:
           limit: 2000
         - method: save
           limit: 2000
+    grpc-services:
+      - method: /rgo.tt.user.grpc.ClientService/findByUsername
+        limit: 2000
