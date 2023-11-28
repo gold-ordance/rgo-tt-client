@@ -12,6 +12,6 @@ CREATE TABLE client (
 GRANT SELECT, INSERT, UPDATE, DELETE ON client TO ${appRole};
 GRANT SELECT ON client TO ${readerRole};
 
-CREATE UNIQUE INDEX email_uq_idx
-    ON client(email)
-    TABLESPACE ${tbsIndexes};
+CREATE UNIQUE INDEX client_email_idx
+                 ON client(email)
+         TABLESPACE ${tbsIndexes};
