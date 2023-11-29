@@ -52,6 +52,17 @@ class ClientRepositoryTest {
     }
 
     @Test
+    void findByEntityId_found() {
+        Client created = randomClient();
+        Client expected = insert(created);
+
+        Optional<Client> actual = repository.findByEntityId(expected.getEntityId());
+        assertThat(actual)
+                .isPresent()
+                .contains(expected);
+    }
+
+    @Test
     void findByEmail_found() {
         Client created = randomClient();
         Client expected = insert(created);
@@ -67,17 +78,6 @@ class ClientRepositoryTest {
         String fakeEmail = randomString();
         Optional<Client> actual = repository.findByEmail(fakeEmail);
         assertThat(actual).isNotPresent();
-    }
-
-    @Test
-    void findByEntityId_found() {
-        Client created = randomClient();
-        Client expected = insert(created);
-
-        Optional<Client> actual = repository.findByEntityId(expected.getEntityId());
-        assertThat(actual)
-                .isPresent()
-                .contains(expected);
     }
 
     @Test
