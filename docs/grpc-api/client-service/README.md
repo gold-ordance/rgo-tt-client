@@ -11,7 +11,7 @@ POST http://localhost:8081/rgo.tt.user.grpc.ClientService/findByUsername
 ```
 
 **Message**:
-```message
+```
 {
     "username": <string>
 }
@@ -22,12 +22,12 @@ POST http://localhost:8081/rgo.tt.user.grpc.ClientService/findByUsername
 * **OK (0):**
 
 Trailers:
-```trailers
+```
 content-type=application/grpc
 ```
 
 Body:
-```body
+```
 {
     "username": <string>,
     "password": <string>
@@ -37,27 +37,27 @@ Body:
 * **DEADLINE_EXCEEDED (4):**
 
 Trailers:
-```trailers
+```
 content-type=application/grpc
 ```
 
 * **NOT_FOUND (5):**
 
 Trailers:
-```trailers
+```
 content-type=application/grpc
 ```
 
 * **RESOURCE_EXHAUSTED (8):**
 
 Trailers:
-```trailers
+```
 content-type=application/grpc
 ```
 
 * **INTERNAL (13):**
 
 Trailers:
-```trailers
+```
 content-type=application/grpc
 ```
