@@ -13,6 +13,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import rgo.tt.user.grpc.ClientGetByUsernameRequest;
 import rgo.tt.user.grpc.ClientGetEntityResponse;
 import rgo.tt.user.grpc.ClientServiceGrpc;
+import rgo.tt.user.grpc.api.ProtoGenerator;
 import rgo.tt.user.persistence.storage.entity.Client;
 import rgo.tt.user.persistence.storage.utils.H2PersistenceUtils;
 import rgo.tt.user.service.ServiceConfig;
@@ -25,7 +26,6 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static rgo.tt.common.grpc.test.simpleserver.GrpcServerManager.getPort;
 import static rgo.tt.common.grpc.test.simpleserver.GrpcServerManager.startGrpcServer;
 import static rgo.tt.common.grpc.test.simpleserver.GrpcServerManager.stopServer;
-import static rgo.tt.common.utils.RandomUtils.randomString;
 import static rgo.tt.user.persistence.storage.utils.EntityGenerator.randomClient;
 
 @ExtendWith(SpringExtension.class)
@@ -50,17 +50,16 @@ class GrpcClientServiceTest {
 
     @Test
     void findByUsername_notFound() {
-        String fakeUsername = randomString();
-        ClientGetByUsernameRequest request = ClientGetByUsernameRequest.newBuilder().setUsername(fakeUsername).build();
+        ClientGetByUsernameRequest request = ProtoGenerator.randomGetByUsernameRequest();
         assertThatThrownBy(() -> blockingClient.findByUsername(request))
                 .isInstanceOf(StatusRuntimeException.class)
-                .hasMessage("NOT_FOUND: Client not found for username: " + fakeUsername);
+                .hasMessage("NOT_FOUND: Client not found for username: " + request.getUsername());
     }
 
     @Test
     void findByUsername_found() {
         Client saved = insert();
-        ClientGetByUsernameRequest request = ClientGetByUsernameRequest.newBuilder().setUsername(saved.getEmail()).build();
+        ClientGetByUsernameRequest request = ProtoGenerator.createGetByUsernameRequest(saved.getEmail());
 
         ClientGetEntityResponse response = blockingClient.findByUsername(request);
 

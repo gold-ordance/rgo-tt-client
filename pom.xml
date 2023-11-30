@@ -26,6 +26,7 @@
         <module>rgo-tt-user-metrics</module>
         <module>rgo-tt-user-grpc-api</module>
         <module>rgo-tt-user-grpc-service</module>
+        <module>rgo-tt-user-grpc-client</module>
     </modules>
 
     <properties>
