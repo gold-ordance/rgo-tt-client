@@ -1,5 +1,6 @@
 package rgo.tt.user.boot;
 
+import com.linecorp.armeria.common.grpc.GrpcSerializationFormats;
 import com.linecorp.armeria.common.logging.LogLevel;
 import com.linecorp.armeria.server.HttpService;
 import com.linecorp.armeria.server.ServiceNaming;
@@ -47,7 +48,11 @@ public class ArmeriaConfig {
                         .defaultServiceNaming(ServiceNaming.simpleTypeName())
                         .annotatedService("/internal", probeService)
                         .annotatedService("/clients", restClientService)
-                        .service(GrpcService.builder().addService(grpcClientService).useBlockingTaskExecutor(true).build())
+                        .service(GrpcService.builder()
+                                .addService(grpcClientService)
+                                .supportedSerializationFormats(GrpcSerializationFormats.values())
+                                .useBlockingTaskExecutor(true)
+                                .build())
                         .serviceUnder("/internal/metrics", PrometheusExpositionService.of(registry.getPrometheusRegistry()))
                         .serviceUnder("/docs", docService())
                         .decorator(LoggingService.builder()
