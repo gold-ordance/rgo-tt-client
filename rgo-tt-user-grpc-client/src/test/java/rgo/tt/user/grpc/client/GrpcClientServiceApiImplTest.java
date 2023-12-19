@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 import rgo.tt.user.grpc.ClientGetByUsernameRequest;
 import rgo.tt.user.grpc.ClientGetEntityResponse;
 import rgo.tt.user.grpc.api.ProtoGenerator;
-import rgo.tt.user.grpc.client.config.GrpcClientConfig;
+import rgo.tt.user.grpc.client.properties.GrpcClientProperties;
 
 import java.io.IOException;
 
@@ -21,13 +21,13 @@ import static rgo.tt.common.grpc.test.simpleserver.GrpcServerManager.startGrpcSe
 class GrpcClientServiceApiImplTest {
 
     private GrpcClientServiceApi client;
-    private GrpcClientConfig config;
+    private GrpcClientProperties config;
 
     @BeforeEach
     void setUp() throws IOException {
         startGrpcServer(new GrpcClientTestServer());
 
-        config = mock(GrpcClientConfig.class);
+        config = mock(GrpcClientProperties.class);
         when(config.endpoint()).thenReturn("http://localhost:" + getPort());
     }
 

@@ -1,6 +1,6 @@
-package rgo.tt.user.grpc.client.config;
+package rgo.tt.user.grpc.client.properties;
 
-public interface GrpcClientConfig {
+public interface GrpcClientProperties {
 
     String endpoint();
     long timeoutMillis();

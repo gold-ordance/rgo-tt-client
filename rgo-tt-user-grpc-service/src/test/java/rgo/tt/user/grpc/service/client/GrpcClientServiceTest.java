@@ -1,7 +1,5 @@
 package rgo.tt.user.grpc.service.client;
 
-import io.grpc.ManagedChannel;
-import io.grpc.ManagedChannelBuilder;
 import io.grpc.StatusRuntimeException;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -26,6 +24,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static rgo.tt.common.grpc.test.simpleserver.GrpcServerManager.getPort;
 import static rgo.tt.common.grpc.test.simpleserver.GrpcServerManager.startGrpcServer;
 import static rgo.tt.common.grpc.test.simpleserver.GrpcServerManager.stopServer;
+import static rgo.tt.user.grpc.api.GrpcClientFactory.createLocalClient;
 import static rgo.tt.user.persistence.storage.utils.EntityGenerator.randomClient;
 
 @ExtendWith(SpringExtension.class)
@@ -40,7 +39,7 @@ class GrpcClientServiceTest {
     void setUp() throws IOException {
         H2PersistenceUtils.truncateTables();
         startGrpcServer(new GrpcClientService(service));
-        blockingClient = initClient();
+        blockingClient = createLocalClient(getPort());
     }
 
     @AfterAll
@@ -65,11 +64,6 @@ class GrpcClientServiceTest {
 
         assertThat(response.getUsername()).isEqualTo(saved.getEmail());
         assertThat(response.getPassword()).isEqualTo(saved.getPassword());
-    }
-
-    private ClientServiceGrpc.ClientServiceBlockingStub initClient() {
-        ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost", getPort()).usePlaintext().build();
-        return ClientServiceGrpc.newBlockingStub(channel);
     }
 
     private Client insert() {

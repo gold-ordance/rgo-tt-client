@@ -1,7 +1,5 @@
 package rgo.tt.user.grpc.client;
 
-import io.grpc.ManagedChannel;
-import io.grpc.ManagedChannelBuilder;
 import io.grpc.Status;
 import io.grpc.StatusRuntimeException;
 import org.junit.jupiter.api.BeforeEach;
@@ -17,6 +15,7 @@ import rgo.tt.user.service.client.ClientService;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.fail;
+import static rgo.tt.user.grpc.api.GrpcClientFactory.createLocalClient;
 import static rgo.tt.user.persistence.storage.utils.EntityGenerator.randomClient;
 
 @SpringBootTest
@@ -32,7 +31,7 @@ class RateLimiterGrpcClientServiceTest {
 
     @BeforeEach
     void setUp() {
-        blockingClient = initClient();
+        blockingClient = createLocalClient(PORT);
     }
 
     @Test
@@ -48,11 +47,6 @@ class RateLimiterGrpcClientServiceTest {
         } catch (StatusRuntimeException e) {
             assertThat(e.getStatus().getCode()).isEqualTo(Status.UNAVAILABLE.getCode());
         }
-    }
-
-    private ClientServiceGrpc.ClientServiceBlockingStub initClient() {
-        ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost", PORT).usePlaintext().build();
-        return ClientServiceGrpc.newBlockingStub(channel);
     }
 
     private Client insert() {
