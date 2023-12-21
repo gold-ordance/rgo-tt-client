@@ -12,6 +12,12 @@
 
     <artifactId>rgo-tt-user-boot</artifactId>
 
+    <properties>
+        <app.name>tt-client-service</app.name>
+        <docker.tag>release</docker.tag>
+        <docker-release.phase>deploy</docker-release.phase>
+    </properties>
+
     <dependencies>
         <!-- self-modules -->
         <dependency>
@@ -43,4 +49,48 @@
         </dependency>
         <!-- test -->
     </dependencies>
+
+    <profiles>
+        <profile>
+            <id>docker-service-dev</id>
+
+            <properties>
+                <docker.tag>snapshot</docker.tag>
+                <docker-release.phase>package</docker-release.phase>
+            </properties>
+        </profile>
+    </profiles>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>com.google.cloud.tools</groupId>
+                <artifactId>jib-maven-plugin</artifactId>
+                <version>3.3.1</version>
+                <configuration>
+                    <to>
+                        <image>${docker.username}/${app.name}:${docker.tag}</image>
+                        <auth>
+                            <username>${docker.username}</username>
+                            <password>${docker.password}</password>
+                        </auth>
+                    </to>
+                    <container>
+                        <args>
+                            <arg>--spring.profiles.active=production</arg>
+                        </args>
+                    </container>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>docker_release</id>
+                        <phase>${docker-release.phase}</phase>
+                        <goals>
+                            <goal>build</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 </project>
