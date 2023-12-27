@@ -48,14 +48,14 @@ Trailers:
 content-type=application/grpc
 ```
 
-* **RESOURCE_EXHAUSTED (8):**
+* **INTERNAL (13):**
 
 Trailers:
 ```
 content-type=application/grpc
 ```
 
-* **INTERNAL (13):**
+* **UNAVAILABLE (14):**
 
 Trailers:
 ```
