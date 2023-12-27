@@ -1,7 +1,6 @@
 package rgo.tt.user.boot;
 
 import com.linecorp.armeria.common.grpc.GrpcSerializationFormats;
-import com.linecorp.armeria.server.DecoratingHttpServiceFunction;
 import com.linecorp.armeria.server.HttpService;
 import com.linecorp.armeria.server.ServiceNaming;
 import com.linecorp.armeria.server.cors.CorsService;
@@ -19,6 +18,7 @@ import org.springframework.context.annotation.Import;
 import rgo.tt.common.armeria.ArmeriaCommonConfig;
 import rgo.tt.common.armeria.ProbeService;
 import rgo.tt.common.armeria.headers.HeadersService;
+import rgo.tt.common.armeria.logger.LoggingDecorator;
 import rgo.tt.user.grpc.service.client.GrpcClientService;
 import rgo.tt.user.rest.api.client.RestClientService;
 
@@ -37,7 +37,7 @@ public class ArmeriaConfig {
     @Autowired private Function<? super HttpService, CorsService> corsDecorator;
     @Autowired private Function<? super HttpService, HeadersService> headersDecorator;
     @Autowired private Function<? super HttpService, MetricCollectingService> metricsDecorator;
-    @Autowired private DecoratingHttpServiceFunction loggingDecorator;
+    @Autowired private Function<? super HttpService, LoggingDecorator> loggingDecorator;
 
     @Autowired private PrometheusMeterRegistry registry;
 
