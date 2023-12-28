@@ -26,10 +26,6 @@
         </dependency>
         <dependency>
             <groupId>ru.gold.ordance</groupId>
-            <artifactId>rgo-tt-user-metrics</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>ru.gold.ordance</groupId>
             <artifactId>rgo-tt-user-grpc-service</artifactId>
         </dependency>
         <!-- self-modules -->
