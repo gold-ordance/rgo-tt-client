@@ -13,7 +13,7 @@ import rgo.tt.user.service.client.ClientService;
 import java.util.List;
 import java.util.Optional;
 
-import static rgo.tt.common.rest.api.utils.RestUtils.mapToHttp;
+import static rgo.tt.common.armeria.rest.RestUtils.mapToHttp;
 import static rgo.tt.user.rest.api.client.ClientMapper.map;
 
 public class InternalRestClientService implements RestClientService {
