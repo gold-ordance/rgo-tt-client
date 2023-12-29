@@ -20,13 +20,6 @@
         </dependency>
         <!-- self-modules -->
 
-        <!-- external modules -->
-        <dependency>
-            <groupId>ru.gold.ordance</groupId>
-            <artifactId>rgo-tt-common-grpc</artifactId>
-        </dependency>
-        <!-- external modules -->
-
         <!-- armeria -->
         <dependency>
             <groupId>com.linecorp.armeria</groupId>
@@ -39,6 +32,11 @@
         <!-- armeria -->
 
         <!-- test -->
+        <dependency>
+            <groupId>ru.gold.ordance</groupId>
+            <artifactId>rgo-tt-common-grpc-test</artifactId>
+            <scope>test</scope>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>

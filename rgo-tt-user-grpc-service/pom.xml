@@ -24,14 +24,12 @@
         </dependency>
         <!-- self-modules -->
 
-        <!-- external modules -->
+        <!-- test -->
         <dependency>
             <groupId>ru.gold.ordance</groupId>
-            <artifactId>rgo-tt-common-grpc</artifactId>
+            <artifactId>rgo-tt-common-grpc-test</artifactId>
+            <scope>test</scope>
         </dependency>
-        <!-- external modules -->
-
-        <!-- test -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
