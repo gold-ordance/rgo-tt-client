@@ -10,13 +10,13 @@ import org.springframework.test.context.ActiveProfiles;
 import rgo.tt.user.grpc.ClientGetByUsernameRequest;
 import rgo.tt.user.grpc.ClientServiceGrpc;
 import rgo.tt.user.grpc.api.ProtoGenerator;
-import rgo.tt.user.persistence.storage.entity.Client;
+import rgo.tt.user.service.client.ClientDto;
 import rgo.tt.user.service.client.ClientService;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.fail;
+import static rgo.tt.user.EntityGenerator.randomClient;
 import static rgo.tt.user.grpc.api.GrpcClientFactory.createLocalClient;
-import static rgo.tt.user.persistence.storage.utils.EntityGenerator.randomClient;
 
 @SpringBootTest
 @ActiveProfiles("test")
@@ -36,7 +36,7 @@ class RateLimiterGrpcClientServiceTest {
 
     @Test
     void findByUsername() {
-        Client saved = insert();
+        ClientDto saved = insert();
         ClientGetByUsernameRequest request = ProtoGenerator.createGetByUsernameRequest(saved.getEmail());
 
         try {
@@ -49,7 +49,7 @@ class RateLimiterGrpcClientServiceTest {
         }
     }
 
-    private Client insert() {
+    private ClientDto insert() {
         return service.save(randomClient());
     }
 }

@@ -2,7 +2,7 @@ package rgo.tt.user.rest.api.client.response;
 
 import rgo.tt.common.rest.api.Response;
 import rgo.tt.common.rest.api.Status;
-import rgo.tt.user.rest.api.client.dto.ClientDto;
+import rgo.tt.user.service.client.ClientDto;
 
 import java.util.List;
 

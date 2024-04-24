@@ -12,9 +12,9 @@ import rgo.tt.user.grpc.ClientGetByUsernameRequest;
 import rgo.tt.user.grpc.ClientGetEntityResponse;
 import rgo.tt.user.grpc.ClientServiceGrpc;
 import rgo.tt.user.grpc.api.ProtoGenerator;
-import rgo.tt.user.persistence.storage.entity.Client;
 import rgo.tt.user.persistence.storage.utils.H2PersistenceUtils;
 import rgo.tt.user.service.ServiceConfig;
+import rgo.tt.user.service.client.ClientDto;
 import rgo.tt.user.service.client.ClientService;
 
 import java.io.IOException;
@@ -25,7 +25,7 @@ import static rgo.tt.common.grpc.test.simpleserver.GrpcServerManager.getPort;
 import static rgo.tt.common.grpc.test.simpleserver.GrpcServerManager.startGrpcServer;
 import static rgo.tt.common.grpc.test.simpleserver.GrpcServerManager.stopServer;
 import static rgo.tt.user.grpc.api.GrpcClientFactory.createLocalClient;
-import static rgo.tt.user.persistence.storage.utils.EntityGenerator.randomClient;
+import static rgo.tt.user.grpc.service.EntityGenerator.randomClient;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = ServiceConfig.class)
@@ -57,7 +57,7 @@ class GrpcClientServiceTest {
 
     @Test
     void findByUsername_found() {
-        Client saved = insert();
+        ClientDto saved = insert();
         ClientGetByUsernameRequest request = ProtoGenerator.createGetByUsernameRequest(saved.getEmail());
 
         ClientGetEntityResponse response = blockingClient.findByUsername(request);
@@ -66,7 +66,7 @@ class GrpcClientServiceTest {
         assertThat(response.getPassword()).isEqualTo(saved.getPassword());
     }
 
-    private Client insert() {
+    private ClientDto insert() {
         return service.save(randomClient());
     }
 }

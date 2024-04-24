@@ -1,37 +1,39 @@
 package rgo.tt.user.service.client;
 
-import rgo.tt.user.persistence.storage.entity.Client;
 import rgo.tt.user.persistence.storage.repository.client.ClientRepository;
 
 import java.util.List;
 import java.util.Optional;
 
+import static rgo.tt.user.service.client.ClientDtoMapper.map;
+
 public class InternalClientService implements ClientService {
 
     private final ClientRepository repository;
-
 
     public InternalClientService(ClientRepository repository) {
         this.repository = repository;
     }
 
     @Override
-    public List<Client> findAll() {
-        return repository.findAll();
+    public List<ClientDto> findAll() {
+        return map(repository.findAll());
     }
 
     @Override
-    public Optional<Client> findByEntityId(Long entityId) {
-        return repository.findByEntityId(entityId);
+    public Optional<ClientDto> findByEntityId(Long entityId) {
+        return repository.findByEntityId(entityId)
+                .map(ClientDtoMapper::map);
     }
 
     @Override
-    public Optional<Client> findByEmail(String email) {
-        return repository.findByEmail(email);
+    public Optional<ClientDto> findByEmail(String email) {
+        return repository.findByEmail(email)
+                .map(ClientDtoMapper::map);
     }
 
     @Override
-    public Client save(Client client) {
-        return repository.save(client);
+    public ClientDto save(ClientDto client) {
+        return map(repository.save(map(client)));
     }
 }

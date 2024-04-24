@@ -1,20 +1,26 @@
-package rgo.tt.user.rest.api.client;
+package rgo.tt.user.service.client;
 
 import rgo.tt.user.persistence.storage.entity.Client;
-import rgo.tt.user.rest.api.client.dto.ClientDto;
-import rgo.tt.user.rest.api.client.request.ClientSaveRequest;
 
 import java.util.List;
 
-public final class ClientMapper {
+final class ClientDtoMapper {
 
-    private ClientMapper() {
+    private ClientDtoMapper() {
+    }
+
+    public static Client map(ClientDto dto) {
+        return Client.builder()
+                .setEmail(dto.getEmail())
+                .setPassword(dto.getPassword())
+                .build();
     }
 
     public static ClientDto map(Client client) {
         ClientDto dto = new ClientDto();
         dto.setEntityId(client.getEntityId());
         dto.setEmail(client.getEmail());
+        dto.setPassword(client.getPassword());
         dto.setCreatedDate(client.getCreatedDate());
         dto.setLastModifiedDate(client.getLastModifiedDate());
         return dto;
@@ -22,14 +28,7 @@ public final class ClientMapper {
 
     public static List<ClientDto> map(List<Client> clients) {
         return clients.stream()
-                .map(ClientMapper::map)
+                .map(ClientDtoMapper::map)
                 .toList();
-    }
-
-    public static Client map(ClientSaveRequest rq) {
-        return Client.builder()
-                .setEmail(rq.getEmail())
-                .setPassword(rq.getPassword())
-                .build();
     }
 }

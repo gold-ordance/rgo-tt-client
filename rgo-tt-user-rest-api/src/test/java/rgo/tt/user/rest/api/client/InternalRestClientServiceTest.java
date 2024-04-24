@@ -9,11 +9,10 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import rgo.tt.common.rest.api.ErrorResponse;
 import rgo.tt.common.rest.api.StatusCode;
-import rgo.tt.user.persistence.storage.entity.Client;
-import rgo.tt.user.persistence.storage.utils.EntityGenerator;
 import rgo.tt.user.persistence.storage.utils.H2PersistenceUtils;
+import rgo.tt.user.rest.api.EntityGenerator;
 import rgo.tt.user.rest.api.RestConfig;
-import rgo.tt.user.rest.api.client.dto.ClientDto;
+import rgo.tt.user.service.client.ClientDto;
 import rgo.tt.user.rest.api.client.request.ClientSaveRequest;
 import rgo.tt.user.rest.api.client.response.ClientGetEntityResponse;
 import rgo.tt.user.rest.api.client.response.ClientGetListResponse;
@@ -33,9 +32,8 @@ import static rgo.tt.common.armeria.test.simpleserver.ArmeriaClientManager.post;
 import static rgo.tt.common.armeria.test.simpleserver.ArmeriaServerManager.startArmeriaServer;
 import static rgo.tt.common.armeria.test.simpleserver.ArmeriaServerManager.stopServer;
 import static rgo.tt.common.utils.RandomUtils.randomPositiveLong;
-import static rgo.tt.user.persistence.storage.utils.EntityGenerator.randomClient;
+import static rgo.tt.user.rest.api.EntityGenerator.randomClient;
 import static rgo.tt.user.rest.api.RequestGenerator.createClientSaveRequest;
-import static rgo.tt.user.rest.api.client.ClientMapper.map;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = RestConfig.class)
@@ -65,7 +63,7 @@ class InternalRestClientServiceTest {
 
         assertThat(response.getStatus().getStatusCode()).isEqualTo(StatusCode.SUCCESS);
         assertThat(response.getStatus().getMessage()).isNull();
-        assertThat(actual).containsExactlyInAnyOrderElementsOf(expected);
+        assertThat(actual.toString()).hasToString(expected.toString());
     }
 
     @Test
@@ -89,7 +87,7 @@ class InternalRestClientServiceTest {
 
         assertThat(response.getStatus().getStatusCode()).isEqualTo(StatusCode.SUCCESS);
         assertThat(response.getStatus().getMessage()).isNull();
-        assertThat(actual).isEqualTo(expected);
+        assertThat(actual.toString()).hasToString(expected.toString());
     }
 
     @Test
@@ -128,7 +126,7 @@ class InternalRestClientServiceTest {
                 .collect(Collectors.toList());
     }
 
-    private ClientDto insert(Client task) {
-        return map(service.save(task));
+    private ClientDto insert(ClientDto client) {
+        return service.save(client);
     }
 }
