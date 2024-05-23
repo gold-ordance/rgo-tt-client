@@ -25,7 +25,7 @@ import static rgo.tt.common.grpc.test.simpleserver.GrpcServerManager.getPort;
 import static rgo.tt.common.grpc.test.simpleserver.GrpcServerManager.startGrpcServer;
 import static rgo.tt.common.grpc.test.simpleserver.GrpcServerManager.stopServer;
 import static rgo.tt.user.grpc.api.GrpcClientFactory.createLocalClient;
-import static rgo.tt.user.grpc.service.EntityGenerator.randomClient;
+import static rgo.tt.user.service.EntityDtoGenerator.randomClient;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = ServiceConfig.class)

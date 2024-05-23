@@ -15,7 +15,7 @@ import rgo.tt.user.service.client.ClientService;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.fail;
-import static rgo.tt.user.EntityGenerator.randomClient;
+import static rgo.tt.user.service.EntityDtoGenerator.randomClient;
 import static rgo.tt.user.grpc.api.GrpcClientFactory.createLocalClient;
 
 @SpringBootTest

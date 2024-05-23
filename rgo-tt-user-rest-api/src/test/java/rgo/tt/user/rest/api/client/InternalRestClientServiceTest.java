@@ -10,7 +10,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import rgo.tt.common.rest.api.ErrorResponse;
 import rgo.tt.common.rest.api.StatusCode;
 import rgo.tt.user.persistence.storage.utils.H2PersistenceUtils;
-import rgo.tt.user.rest.api.EntityGenerator;
+import rgo.tt.user.service.EntityDtoGenerator;
 import rgo.tt.user.rest.api.RestConfig;
 import rgo.tt.user.service.client.ClientDto;
 import rgo.tt.user.rest.api.client.request.ClientSaveRequest;
@@ -32,7 +32,7 @@ import static rgo.tt.common.armeria.test.simpleserver.ArmeriaClientManager.post;
 import static rgo.tt.common.armeria.test.simpleserver.ArmeriaServerManager.startArmeriaServer;
 import static rgo.tt.common.armeria.test.simpleserver.ArmeriaServerManager.stopServer;
 import static rgo.tt.common.utils.RandomUtils.randomPositiveLong;
-import static rgo.tt.user.rest.api.EntityGenerator.randomClient;
+import static rgo.tt.user.service.EntityDtoGenerator.randomClient;
 import static rgo.tt.user.rest.api.RequestGenerator.createClientSaveRequest;
 
 @ExtendWith(SpringExtension.class)
@@ -120,7 +120,7 @@ class InternalRestClientServiceTest {
 
     private List<ClientDto> insertRandomClients() {
         int limit = ThreadLocalRandom.current().nextInt(1, 10);
-        return Stream.generate(EntityGenerator::randomClient)
+        return Stream.generate(EntityDtoGenerator::randomClient)
                 .limit(limit)
                 .map(this::insert)
                 .collect(Collectors.toList());
